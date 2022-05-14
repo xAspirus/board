@@ -1,0 +1,2 @@
+# board
+forum/ image board
