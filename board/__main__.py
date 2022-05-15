@@ -4,8 +4,10 @@ import re
 
 from rich import print
 from flask import Flask, send_from_directory, request
+from flask_cors import CORS #type: ignore
 
 APP = Flask("/board")
+CORS(APP)
 
 
 def is_username_valid(username: str) -> bool:
@@ -51,7 +53,7 @@ def route_register_POST():
     email = request.form.get("email")
     password = request.form.get("password")
     ip_address = request.remote_addr
-    print(f"#--> /login\n  {username=}\n  {password=}\n  {email=}\n  {ip_address=}")
+    print(f"#--> /register\n  {username=}\n  {password=}\n  {email=}\n  {ip_address=}")
     if not is_username_valid(username):
         return f'"{username}" is not a valid username, must only use lowercase a-z'
     if not is_email_valid(email):

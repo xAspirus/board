@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --base0: #292828;
+  --base1: #32302f;
+  --base2: #504945;
+  --base3: #665c54;
+  --base4: #bdae93;
+  --base5: #ddc7a1;
+  --base6: #ebdbb2;
+  --base7: #ffffff;
+  --base8: #ea6962; /* red        */
+  --base9: #e78a4e; /* orange     */
+  --baseA: #d8a657; /* yellow     */
+  --baseB: #a9b665; /* green      */
+  --baseC: #89b482; /* aqua/cyan  */
+  --baseD: #7daea3; /* blue       */
+  --baseE: #d3869b; /* purple     */
+  --baseF: #bd6f3e; /* dim-orange */
+}
+
+* {
+  color: var(--base5);
+  font-family: Roboto Mono;
+  font-size: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+html {
+  background-color: var(--base0);
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 16px;
+}
+
+a {
+  display: inline-block;
+  color: var(--baseD);
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+a:hover {
+  background-color: var(--baseD);
+  color: var(--base7);
+}
+
+hr {
+  border: 1px solid var(--base3);
+  border-top: none;
+  margin: 8px;
+}
+
+.prompt:before {
+  content: ">";
+  margin-right: 4px;
+  margin-left: 4px;
+  color: var(--baseA);
+}
+
+a.abtn {
+  background-color: var(--baseA);
+  color: var(--base7);
+}
+
+a.bbtn {
+  background-color: var(--baseC);
+  color: var(--base7);
+}
+
+.right {
+  float: right;
+}
+
+.boards > a:before {
+  content: "/b/";
+  color: var(--base3);
+}
+
+.hidden {
+  display: none;
+}
+
+.box {
+  margin: auto;
+  padding: 8px;
+  width: 50%;
+  margin-top: 100px;
+}
+
+label {
+  font-style: italic;
+  color: var(--base4);
+  display: block;
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+
+input {
+  background-color: var(--base2);
+  border: none;
+  padding: 4px;
+  width: 100%;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.text-right {
+  float: right;
+}
+
+br.br {
+  display: block;
+  margin: 5px;
+}
+
+#login-form-btn {
+  width: auto;
+  float: left;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px;
+  background-color: var(--baseB);
+  color: var(--base7);
+}
+
+.err {
+  color: var(--base8);
+  font-weight: bold;
+  text-align: center;
+}

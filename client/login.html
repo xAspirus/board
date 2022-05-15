@@ -1,15 +1,29 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-    <h1>Login</h1>
-    <form method="post" action="http://0.0.0.0:8001/login">
-      <label for="username">Username:</label><br>
-      <input type="text" id="username" name="username"><br>
-      <label for="lname">Password:</label><br>
-      <input type="password" id="password" name="password"><br>
-      <input type="submit" value="Login">
-    </form>
+    <h1 class="prompt">IMGBOARD/login</h1>
+    <nav>
+      <a href="/">HOME</a>
+      <div class="right">
+        <a href="/login.html" id="login-btn">LOGIN</a>
+        <a href="/register.html" id="register-btn">REGISTER</a>
+        <a href="/account.html" class="bbtn hidden" id="username-btn">aspirus</a>
+        <a href="/logout.html" class="abtn hidden" id="logout-btn">LOGOUT</a>
+      </div>
+    </nav>
+    <hr>
+    <div class="box">
+      <label for="username">username</label>
+      <input type="text" name="username" id="username">
+      <label for="username">password</label>
+      <input type="password" name="password" id="password">
+      <br class="br">
+      <input type="button" value="login" id="login-form-btn">
+      <br class="br">
+      <a href="/register.html" class="text-right italic">create new account</a>
+    </div>
   </body>
 </html>
