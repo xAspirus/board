@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="/css/main.css">
-  </head>
-  <body>
-    <h1 class="prompt">IMGBOARD/login</h1>
-    <nav>
-      <a href="/">HOME</a>
-      <div class="right">
-        <a href="/login.html" id="login-btn">LOGIN</a>
-        <a href="/register.html" id="register-btn">REGISTER</a>
-        <a href="/account.html" class="bbtn hidden" id="username-btn">aspirus</a>
-        <a href="/logout.html" class="abtn hidden" id="logout-btn">LOGOUT</a>
-      </div>
-    </nav>
-    <hr>
-    <div class="box">
-      <form method="POST" id="register-form">
-        <p class="err hidden">username can only contain a-z lowercase</p>
-        <label for="username">username</label>
-        <input type="text" name="username" id="username">
-        <label for="username">email</label>
-        <input type="text" name="email" id="email">
-        <label for="username">password</label>
-        <input type="password" name="password" id="password">
-        <br class="br">
-        <input type="submit" value="register" id="login-form-btn">
-        <br class="br">
-        <a href="/login.html" class="text-right italic">login to existing account</a>
-      </form>
+
+<head>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+  <h1 class="prompt">IMGBOARD/login</h1>
+  <nav>
+    <a href="/">HOME</a>
+    <div class="right">
+      <a href="/login.html" id="login-btn">LOGIN</a>
+      <a href="/register.html" id="register-btn">REGISTER</a>
+      <a href="/account.html" class="bbtn hidden" id="username-btn">aspirus</a>
+      <a href="/logout.html" class="abtn hidden" id="logout-btn">LOGOUT</a>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/js/register.js"></script>
-  </body>
+  </nav>
+  <hr>
+  <div class="box">
+    <form method="POST" id="register-form">
+      <h4>register new account</h4>
+      <p class="err hidden" id="err_box"></p>
+      <label for="username">username</label>
+      <input type="text" name="username" id="username">
+      <label for="username">email</label>
+      <input type="text" name="email" id="email">
+      <label for="username">password</label>
+      <input type="password" name="password" id="password">
+      <br class="br">
+      <input type="submit" value="register" id="login-form-btn">
+      <br class="br">
+      <a href="/login.html" class="text-right italic">login to existing account</a>
+    </form>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="/js/register.js"></script>
+</body>
+
 </html>

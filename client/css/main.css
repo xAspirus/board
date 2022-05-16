@@ -136,4 +136,7 @@ br.br {
   color: var(--base8);
   font-weight: bold;
   text-align: center;
+  padding: 5px;
+  margin: 5px;
+  background-color: rgba(255, 0, 0, 0.144);
 }
