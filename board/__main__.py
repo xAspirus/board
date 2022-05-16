@@ -53,30 +53,58 @@ def route_home():
 
 @APP.route("/<path:name>")
 def route_login(name):
-    if not "." in name:
-        name = name = ".html"
     return send_from_directory("client", name)
+
+
+def validate_session() -> tuple[str, str]:
+    session_id = request.cookies.get("SESSION")
+    if not session_id in SESSIONS:
+        raise KeyError
+    username = SESSIONS[session_id]
+    return username, session_id
+
+
+def log_out_session(session_id: str):
+    SESSIONS.pop(session_id)
+    resp = make_response({"msg": "success"})
+    resp.set_cookie("SESSION", "", expires=0)
+    return resp
 
 
 @APP.route("/update-account", methods=["post"])
 def route_updateAccount_POST():
     new_email = request.form.get("email")
+    new_password = request.form.get("password")
     ip_address = request.remote_addr
-    session_id = request.cookies.get("SESSION")
-    print(f"#--> /update-account\n  {new_email=}\n  {ip_address=}\n  {session_id=}")
-    print(SESSIONS)
-    if not is_email_valid(new_email):
-        return {"msg": "error"}
-    if not session_id in SESSIONS:
-        return {"msg": "invalid_session"}
-    username = SESSIONS[session_id]
-    with sqlite3.connect(".db") as db:
-        dbc = db.cursor()
-        dbc.execute(
-            "UPDATE Users SET email = ? WHERE username = ?", (new_email, username)
-        )
-        db.commit()
-    return {"msg": "success"}
+    print(f"#--> /update-account\n  {new_email=}\n  {new_password=}\n  {ip_address=}")
+    if new_email + new_password == "":
+        return {"msg": "success"}
+    if new_email != "" and not is_email_valid(new_email):
+        return {"msg": "email_invalid"}
+    if new_password != "" and not is_password_valid(new_password):
+        return {"msg": "password_invalid"}
+    try:
+        username, session_id = validate_session()
+        with sqlite3.connect(".db") as db:
+            dbc = db.cursor()
+            sql = []
+            sql_args = []
+            if new_email != "":
+                sql.append("email = ?")
+                sql_args.append(new_email)
+            if new_password != "":
+                sql.append("password = ?")
+                sql_args.append(new_password)
+            sql = ", ".join(sql)
+            dbc.execute(
+                f"UPDATE Users SET {sql} WHERE username = ?", sql_args + [username]
+            )
+            db.commit()
+            if new_password != "":
+                return log_out_session(session_id)
+            return {"msg": "success"}
+    except KeyError:
+        return {"msg": "session_invalid"}
 
 
 @APP.route("/login", methods=["POST"])
@@ -92,23 +120,30 @@ def route_login_POST():
         query = dbc.execute(
             "SELECT password, is_banned FROM Users WHERE username = ?", (username,)
         ).fetchone()
-        if query is None:
-            return {"msg": "username_invalid"}
-        if not is_password_valid(password):
-            return {"msg": "password_wrong"}
-        query_password, query_is_banned = query
-        if password != query_password:
-            return {"msg": "password_wrong"}
-        if query_is_banned:
-            return {"msg": "user_banned"}
-        if username in SESSIONS:
-            session_id = SESSIONS.keys()[SESSIONS.values().index(username)]
-        else:
-            session_id = random_session_id()
-            SESSIONS[session_id] = username
-        resp = make_response({"msg": "success"})
-        resp.set_cookie("SESSION", session_id, samesite="Strict")
-        return resp
+    if query is None:
+        return {"msg": "username_invalid"}
+    if not is_password_valid(password):
+        return {"msg": "password_wrong"}
+    query_password, query_is_banned = query
+    if password != query_password:
+        return {"msg": "password_wrong"}
+    if query_is_banned:
+        return {"msg": "user_banned"}
+    if username in SESSIONS:
+        session_id = SESSIONS.keys()[SESSIONS.values().index(username)]
+    else:
+        session_id = random_session_id()
+        SESSIONS[session_id] = username
+    resp = make_response({"msg": "success"})
+    resp.set_cookie("SESSION", session_id, samesite="Strict")
+    resp.set_cookie("USERNAME", username, samesite="Strict")
+    return resp
+
+
+@APP.route("/logout", methods=["POST"])
+def route_logout_POST():
+    session_id = request.cookies.get("SESSION")
+    return log_out_session(session_id)
 
 
 @APP.route("/register", methods=["POST"])
