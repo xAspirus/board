@@ -2,6 +2,7 @@ import sqlite3
 import re
 import secrets
 import string
+import bcrypt
 
 
 from rich import print
@@ -12,6 +13,14 @@ APP = Flask("/board")
 CORS(APP)
 #              session_id: username
 SESSIONS: dict[str, str] = {}
+
+
+def check_password(password: str, hash: str) -> bool:
+    return bcrypt.checkpw(password.encode("ascii"), hash.encode("ascii"))
+
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("ascii"), bcrypt.gensalt()).decode("ascii")
 
 
 def random_session_id() -> str:
@@ -94,7 +103,7 @@ def route_updateAccount_POST():
                 sql_args.append(new_email)
             if new_password != "":
                 sql.append("password = ?")
-                sql_args.append(new_password)
+                sql_args.append(hash_password(new_password))
             sql = ", ".join(sql)
             dbc.execute(
                 f"UPDATE Users SET {sql} WHERE username = ?", sql_args + [username]
@@ -124,8 +133,8 @@ def route_login_POST():
         return {"msg": "username_invalid"}
     if not is_password_valid(password):
         return {"msg": "password_wrong"}
-    query_password, query_is_banned = query
-    if password != query_password:
+    pwd_hash, query_is_banned = query
+    if not check_password(password, pwd_hash):
         return {"msg": "password_wrong"}
     if query_is_banned:
         return {"msg": "user_banned"}
@@ -174,7 +183,7 @@ def route_register_POST():
 
         dbc.execute(
             "INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?)",
-            (username, email, password, ip_address, 0, 0),
+            (username, email, hash_password(password), ip_address, 0, 0),
         )
         db.commit()
 
