@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/register.js"></script>
+</head>
+
+<body>
+  <div id="header">
+    <img src="/img/logo.png">
+    <div id="nav">
+      <a href="/">home</a>
+      <a href="/about">about</a>
+      <a href="/privacy">privacy</a>
+      <div id="nav-right">
+        <a href="/account" class="username" id="nav-username">username</a>
+        <a href="/logout" id="nav-logout">log out</a>
+        <a href="/login" id="nav-login">login</a>
+        <a href="/register" id="nav-register">register</a>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <div id="sidebar">
+      <h1>Boards</h1>
+    </div>
+    <div id="content">
+      <h1>Register new account</h1>
+      <p>By registering a account here, you agree to the privacy policy and code of conduct.</p>
+      <div class="box">
+        <div class="error-box hidden" id="error-box"></div>
+        <label>Username</label>
+        <input type="text" id="username">
+        <label>E-Mail ID</label>
+        <input type="text" id="email">
+        <label>Password</label>
+        <input type="password" id="password">
+        <label>Confirm Password</label>
+        <input type="password" id="confirm-password">
+        <button id="register" onclick="register_send()">Register</button>
+        <a href="/login">Login instead</a>
+      </div>
+    </div>
+</body>
+
+</html>

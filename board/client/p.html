@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+</head>
+
+<body>
+  <div id="header">
+    <img src="/img/logo.png">
+    <div id="nav">
+      <a href="/">home</a>
+      <a href="/about">about</a>
+      <a href="/privacy">privacy</a>
+      <div id="nav-right">
+        <a href="/account" class="username" id="nav-username">username</a>
+        <a href="/logout" id="nav-logout">log out</a>
+        <a href="/login" id="nav-login">login</a>
+        <a href="/register" id="nav-register">register</a>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <div id="sidebar">
+      <h1>Boards</h1>
+    </div>
+    <div id="content">
+      <h1>/b/lounge</h1>
+      <div class="post-header">
+        <a href="/">aspirus</a>
+        <span class="date">10:30 PM 23/10/2004</span>
+        <div class="post-header-right">
+          <a href="/">delete</a>
+        </div>
+      </div>
+      <div class="post">
+      </div>
+      <h1>Comments</h1>
+      <div id="comments">
+        <textarea type="text" id="input-comment"></textarea>
+        <button id="submit-comment">post</button>
+        <div class="post-header">
+          <a href="/">aspirus</a>
+          <span class="date">10:30 PM 23/10/2004</span>
+          <div class="post-header-right">
+            <a href="/">quote</a>
+            <a href="/">delete</a>
+            <a href="/">edit</a>
+          </div>
+        </div>
+        <div class="post">
+        </div>
+        <div id="pager">
+          <a href="/">prev</a>
+          <span>Page: 10</span>
+          <a href="/" class="right">next</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

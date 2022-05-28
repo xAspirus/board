@@ -1,43 +1,47 @@
 /*! js-cookie v3.0.1 | MIT */
 !function (e, t) { "object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = e || self, function () { var n = e.Cookies, o = e.Cookies = t(); o.noConflict = function () { return e.Cookies = n, o } }()) }(this, (function () { "use strict"; function e(e) { for (var t = 1; t < arguments.length; t++) { var n = arguments[t]; for (var o in n) e[o] = n[o] } return e } return function t(n, o) { function r(t, r, i) { if ("undefined" != typeof document) { "number" == typeof (i = e({}, o, i)).expires && (i.expires = new Date(Date.now() + 864e5 * i.expires)), i.expires && (i.expires = i.expires.toUTCString()), t = encodeURIComponent(t).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape); var c = ""; for (var u in i) i[u] && (c += "; " + u, !0 !== i[u] && (c += "=" + i[u].split(";")[0])); return document.cookie = t + "=" + n.write(r, t) + c } } return Object.create({ set: r, get: function (e) { if ("undefined" != typeof document && (!arguments.length || e)) { for (var t = document.cookie ? document.cookie.split("; ") : [], o = {}, r = 0; r < t.length; r++) { var i = t[r].split("="), c = i.slice(1).join("="); try { var u = decodeURIComponent(i[0]); if (o[u] = n.read(c, u), e === u) break } catch (e) { } } return e ? o[e] : o } }, remove: function (t, n) { r(t, "", e({}, n, { expires: -1 })) }, withAttributes: function (n) { return t(this.converter, e({}, this.attributes, n)) }, withConverter: function (n) { return t(e({}, this.converter, n), this.attributes) } }, { attributes: { value: Object.freeze(o) }, converter: { value: Object.freeze(n) } }) }({ read: function (e) { return '"' === e[0] && (e = e.slice(1, -1)), e.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent) }, write: function (e) { return encodeURIComponent(e).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g, decodeURIComponent) } }, { path: "/" }) }));
 
+function post_json(url, json, callback) {
+    return $.post({
+        url: url,
+        data: JSON.stringify(json),
+        dataType: "json",
+        success: callback,
+        contentType: "application/json"
+    });
+};
+
+function add_error(text) {
+    let error_box = $("#error-box")
+    error_box.text(text);
+    error_box.removeClass("hidden");
+}
+
+function hide_error() {
+    let error_box = $("#error-box")
+    error_box.addClass("hidden");
+}
 
 $(document).ready(function () {
-    login_detect();
+    let a = $("<a>/b/lounge</a>");
+    a.text("/b/lounge");
+    a.attr("href", "/b/lounge");
+    $("#sidebar").append(a);
+    UserInterface_LoginStatus(Cookies.get("username"));
 });
 
-
-function login_detect() {
-    session_id = Cookies.get('SESSION');
-    username = Cookies.get('USERNAME');
-    if (typeof session_id !== 'undefined') {
-        ui_login(username);
+function UserInterface_LoginStatus(username) {
+    if (username === "") {
+        $("#nav-username").addClass("hidden");
+        $("#nav-logout").addClass("hidden");
+        $("#nav-login").removeClass("hidden");
+        $("#nav-register").removeClass("hidden");
     } else {
-        ui_logout();
+        $("#nav-username")
+            .removeClass("hidden")
+            .text(username);
+        $("#nav-logout").removeClass("hidden");
+        $("#nav-login").addClass("hidden");
+        $("#nav-register").addClass("hidden");
     }
-}
-
-function ui_login(username) {
-    $("#login-btn").addClass("hidden");
-    $("#register-btn").addClass("hidden");
-    $("#username-btn").removeClass("hidden").text(username);
-    $("#logout-btn").removeClass("hidden");
-}
-
-function ui_logout() {
-    $("#login-btn").removeClass("hidden");
-    $("#register-btn").removeClass("hidden");
-    $("#username-btn").addClass("hidden");
-    $("#logout-btn").addClass("hidden");
-}
-
-function logout() {
-    $.ajax({
-        type: "POST",
-        url: "http://0.0.0.0:8000/logout",
-        data: {},
-        dataType: "json",
-        encode: true,
-    });
-    ui_logout();
 }
